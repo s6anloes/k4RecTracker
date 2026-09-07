@@ -119,15 +119,15 @@ edm4hep::RecDqdxCollection TrackdNdxDelphesBased::operator()(const edm4hep::Trac
     debug() << "MCParticle betagamma: " << betagamma << endmsg;
     // Check if betagamma is in valid range of delphes parametrisation (status: 16 June 2025)
     if (betagamma < 0.5) {
-      debug() << "beta*gamma value below lower limit of \"good\" range of delphes parametrisation (0.5-10000), dN/dx will be "
-                    "set to dummy value: "
-                << dummy_value << " clusters/mm" << endmsg;
+      debug() << "beta*gamma value below lower limit of \"good\" range of delphes parametrisation (0.5-10000), dN/dx "
+                 "will be set to dummy value: "
+              << dummy_value << " clusters/mm" << endmsg;
       store_value();
       continue;
     } else if (betagamma >= 10000) {
       debug() << "beta*gamma value above upper limit of \"good\" range of delphes parametrisation (0.5-10000), "
-                    "beta*gamma will be set to max value as approximation."
-                << endmsg;
+                 "beta*gamma will be set to max value as approximation."
+              << endmsg;
       betagamma = 9999.9; // 10000 is out of range already
     }
 
@@ -136,11 +136,11 @@ edm4hep::RecDqdxCollection TrackdNdxDelphesBased::operator()(const edm4hep::Trac
     double nclusters_per_mm = m_delphesTrkUtil.Nclusters(betagamma, m_GasSel.value()) / 1000.0;
     debug() << "Number of clusters per mm: " << nclusters_per_mm << endmsg;
     if (nclusters_per_mm < 1e-6) {
-        warning() << "Delphes number of clusters per mm calculation returned 0.0, dN/dx will be set to dummy value: "
-                  << dummy_value << " clusters/mm" << endmsg;
-        store_value();
-        continue;
-      }
+      warning() << "Delphes number of clusters per mm calculation returned 0.0, dN/dx will be set to dummy value: "
+                << dummy_value << " clusters/mm" << endmsg;
+      store_value();
+      continue;
+    }
 
     ///////////////////////
     // Track Information //
